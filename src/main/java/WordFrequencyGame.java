@@ -15,7 +15,8 @@ public class WordFrequencyGame {
                 List<WordCount> wordFrequencies = Arrays.stream(inputStrSplit)
                         .collect(Collectors.groupingBy(word -> word, Collectors.toList())).entrySet().stream()
                         .map(entry -> new WordCount(entry.getKey(), entry.getValue().size()))
-                        .sorted((w1, w2) -> w2.wordCount - w1.wordCount).collect(Collectors.toList());
+                        .sorted((w1, w2) -> w2.wordCount - w1.wordCount)
+                        .collect(Collectors.toList());
 
                 return composeOutput(wordFrequencies);
             } catch (Exception e) {
