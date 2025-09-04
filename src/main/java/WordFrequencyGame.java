@@ -29,13 +29,10 @@ public class WordFrequencyGame {
     }
 
     private String composeOutput(List<WordCount> wordFrequencies) {
-        StringJoiner joiner = new StringJoiner("\n");
-        for (WordCount w : wordFrequencies) {
-            String s = w.word + " " + w.wordCount;
-            joiner.add(s);
-        }
-
-        return joiner.toString();
+        return wordFrequencies.stream()
+                .map(w -> w.word + " " + w.wordCount)
+                .reduce((s1, s2) -> s1 + "\n" + s2)
+                .orElse("");
     }
 
     private Map<String, List<String>> groupSameWords(String[] words) {
