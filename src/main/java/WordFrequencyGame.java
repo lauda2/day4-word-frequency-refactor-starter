@@ -20,18 +20,22 @@ public class WordFrequencyGame {
 
                 wordFrequencies.sort((w1, w2) -> w2.wordCount - w1.wordCount);
 
-                StringJoiner joiner = new StringJoiner("\n");
-                for (WordCount w : wordFrequencies) {
-                    String s = w.word + " " + w.wordCount;
-                    joiner.add(s);
-                }
-
-                return joiner.toString();
+                return composeOutput(wordFrequencies);
 
             } catch (Exception e) {
                 return "Calculate Error";
             }
         }
+    }
+
+    private String composeOutput(List<WordCount> wordFrequencies) {
+        StringJoiner joiner = new StringJoiner("\n");
+        for (WordCount w : wordFrequencies) {
+            String s = w.word + " " + w.wordCount;
+            joiner.add(s);
+        }
+
+        return joiner.toString();
     }
 
     private Map<String, List<String>> groupSameWords(String[] words) {
