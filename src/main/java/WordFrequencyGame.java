@@ -3,6 +3,7 @@ import java.util.*;
 public class WordFrequencyGame {
 
     public static final String ANY_SPACE_SEPARATOR = "\\s+";
+    record WordCount(String word, int wordCount) {}
 
     public String getResult(String inputStr) {
         if (inputStr.split(ANY_SPACE_SEPARATOR).length == 1) {
@@ -12,13 +13,13 @@ public class WordFrequencyGame {
                 //split the input string with 1 to n pieces of spaces
                 String[] words = inputStr.split(ANY_SPACE_SEPARATOR);
 
-                List<Input> wordFrequencies = countWordFrequency(words);
+                List<WordCount> wordFrequencies = countWordFrequency(words);
 
-                wordFrequencies.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+                wordFrequencies.sort((w1, w2) -> w2.wordCount - w1.wordCount);
 
                 StringJoiner joiner = new StringJoiner("\n");
-                for (Input w : wordFrequencies) {
-                    String s = w.getValue() + " " + w.getWordCount();
+                for (WordCount w : wordFrequencies) {
+                    String s = w.word + " " + w.wordCount;
                     joiner.add(s);
                 }
 
@@ -30,14 +31,14 @@ public class WordFrequencyGame {
         }
     }
 
-    private List<Input> countWordFrequency(String[] words) {
+    private List<WordCount> countWordFrequency(String[] words) {
         Map<String, List<String>> groups = groupSameWords(words);
 
-        List<Input> frequencies = new ArrayList<>();
+        List<WordCount> frequencies = new ArrayList<>();
 
         for (Map.Entry<String, List<String>> entry : groups.entrySet()) {
-            Input input = new Input(entry.getKey(), entry.getValue().size());
-            frequencies.add(input);
+            WordCount wordCount = new WordCount(entry.getKey(), entry.getValue().size());
+            frequencies.add(wordCount);
         }
         return frequencies;
     }
