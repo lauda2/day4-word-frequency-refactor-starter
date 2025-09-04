@@ -2,7 +2,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
-
     public static final String ANY_SPACE_SEPARATOR = "\\s+";
     record WordCount(String word, int wordCount) {}
 
@@ -13,15 +12,12 @@ public class WordFrequencyGame {
         } else {
             try {
                 //split the input string with 1 to n pieces of spaces
-
                 List<WordCount> wordFrequencies = groupSameWords(inputStrSplit).entrySet().stream()
                                 .map(entry -> new WordCount(entry.getKey(), entry.getValue().size()))
                                 .collect(Collectors.toList());
 
                 wordFrequencies.sort((w1, w2) -> w2.wordCount - w1.wordCount);
-
                 return composeOutput(wordFrequencies);
-
             } catch (Exception e) {
                 return "Calculate Error";
             }
@@ -36,17 +32,6 @@ public class WordFrequencyGame {
     }
 
     private Map<String, List<String>> groupSameWords(String[] words) {
-        Map<String, List<String>> wordGroups = new HashMap<>();
-        for (String word : words) {
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!wordGroups.containsKey(word)) {
-                ArrayList<String> newWordList = new ArrayList<>();
-                newWordList.add(word);
-                wordGroups.put(word, newWordList);
-            } else {
-                wordGroups.get(word).add(word);
-            }
-        }
-        return wordGroups;
+        return Arrays.stream(words).collect(Collectors.groupingBy(word -> word, Collectors.toList()));
     }
 }
