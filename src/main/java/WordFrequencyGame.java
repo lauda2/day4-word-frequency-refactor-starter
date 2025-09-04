@@ -6,14 +6,14 @@ public class WordFrequencyGame {
     record WordCount(String word, int wordCount) {}
 
     public String getResult(String inputStr) {
-        if (inputStr.split(ANY_SPACE_SEPARATOR).length == 1) {
+        String[] inputStrSplit = inputStr.split(ANY_SPACE_SEPARATOR);
+        if (inputStrSplit.length == 1) {
             return inputStr + " 1";
         } else {
             try {
                 //split the input string with 1 to n pieces of spaces
-                String[] words = inputStr.split(ANY_SPACE_SEPARATOR);
 
-                List<WordCount> wordFrequencies = countWordFrequency(words);
+                List<WordCount> wordFrequencies = countWordFrequency(inputStrSplit);
 
                 wordFrequencies.sort((w1, w2) -> w2.wordCount - w1.wordCount);
 
