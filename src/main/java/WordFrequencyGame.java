@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
 
@@ -13,7 +14,9 @@ public class WordFrequencyGame {
             try {
                 //split the input string with 1 to n pieces of spaces
 
-                List<WordCount> wordFrequencies = countWordFrequency(inputStrSplit);
+                List<WordCount> wordFrequencies = groupSameWords(inputStrSplit).entrySet().stream()
+                                .map(entry -> new WordCount(entry.getKey(), entry.getValue().size()))
+                                .collect(Collectors.toList());
 
                 wordFrequencies.sort((w1, w2) -> w2.wordCount - w1.wordCount);
 
@@ -29,18 +32,6 @@ public class WordFrequencyGame {
                 return "Calculate Error";
             }
         }
-    }
-
-    private List<WordCount> countWordFrequency(String[] words) {
-        Map<String, List<String>> groups = groupSameWords(words);
-
-        List<WordCount> frequencies = new ArrayList<>();
-
-        for (Map.Entry<String, List<String>> entry : groups.entrySet()) {
-            WordCount wordCount = new WordCount(entry.getKey(), entry.getValue().size());
-            frequencies.add(wordCount);
-        }
-        return frequencies;
     }
 
     private Map<String, List<String>> groupSameWords(String[] words) {
