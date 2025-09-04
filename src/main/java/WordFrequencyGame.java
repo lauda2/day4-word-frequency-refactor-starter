@@ -12,7 +12,8 @@ public class WordFrequencyGame {
         } else {
             try {
                 //split the input string with 1 to n pieces of spaces
-                List<WordCount> wordFrequencies = groupSameWords(inputStrSplit).entrySet().stream()
+                List<WordCount> wordFrequencies = Arrays.stream(inputStrSplit)
+                        .collect(Collectors.groupingBy(word -> word, Collectors.toList())).entrySet().stream()
                         .map(entry -> new WordCount(entry.getKey(), entry.getValue().size()))
                         .sorted((w1, w2) -> w2.wordCount - w1.wordCount).collect(Collectors.toList());
 
@@ -30,7 +31,4 @@ public class WordFrequencyGame {
                 .orElse("");
     }
 
-    private Map<String, List<String>> groupSameWords(String[] words) {
-        return Arrays.stream(words).collect(Collectors.groupingBy(word -> word, Collectors.toList()));
-    }
 }
