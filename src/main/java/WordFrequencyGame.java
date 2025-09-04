@@ -13,10 +13,9 @@ public class WordFrequencyGame {
             try {
                 //split the input string with 1 to n pieces of spaces
                 List<WordCount> wordFrequencies = groupSameWords(inputStrSplit).entrySet().stream()
-                                .map(entry -> new WordCount(entry.getKey(), entry.getValue().size()))
-                                .collect(Collectors.toList());
+                        .map(entry -> new WordCount(entry.getKey(), entry.getValue().size()))
+                        .sorted((w1, w2) -> w2.wordCount - w1.wordCount).collect(Collectors.toList());
 
-                wordFrequencies.sort((w1, w2) -> w2.wordCount - w1.wordCount);
                 return composeOutput(wordFrequencies);
             } catch (Exception e) {
                 return "Calculate Error";
